@@ -1,0 +1,9 @@
+[package]
+name = "sigmaos-tools-gliff"
+version = "0.1.0"
+edition = "2021"
+authors = ["Aaryan Singh Chauhan <aaryansinghchauhan@sigmaos.internal>"]
+description = "Remote desktop protocol and display streaming engine for Hyprland"
+license = "MIT"
+
+[dependencies]

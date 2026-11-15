@@ -1,0 +1,1 @@
+# SigmaOS-tools-gliff\n\nRemote desktop for Hyprland & Wayland (omacom/gliff parity).\n\nPart of the SigmaOS sovereign ecosystem.\n
