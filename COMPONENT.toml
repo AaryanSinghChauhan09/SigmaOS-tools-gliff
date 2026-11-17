@@ -3,7 +3,7 @@ name = "SigmaOS-tools-gliff"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "tools-gliff component"
+description = "tools gliff component"
 upstream = []
 
 [contract]
