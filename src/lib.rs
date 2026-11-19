@@ -1,3 +1,4 @@
+#![forbid(unsafe_code)]
 //! SigmaOS Tools Gliff - Hyprland remote desktop protocol and stream orchestrator.
 
 /// Remote display session state.
@@ -99,5 +100,47 @@ mod tests {
         session.disconnect();
         assert_eq!(session.state(), SessionState::Disconnected);
         assert!(!session.send_input(InputEvent::PointerMotion { x: 0.0, y: 0.0 }));
+    }
+}
+
+#[cfg(test)]
+mod gliff_extra_tests {
+    use super::*;
+
+    #[test]
+    fn test_gliff_key_press_event_aaa() {
+        // Arrange
+        let mut session = GliffSession::new("10.0.0.1", 8080);
+        session.connect().unwrap();
+        // Act
+        let ok = session.send_input(InputEvent::Key { keycode: 65, pressed: true });
+        // Assert
+        assert!(ok);
+        assert_eq!(session.events_processed(), 1);
+    }
+
+    #[test]
+    fn test_gliff_double_connect_noop_aaa() {
+        // Arrange
+        let mut session = GliffSession::new("10.0.0.1", 8080);
+        session.connect().unwrap();
+        // Act
+        let conn2 = session.connect();
+        // Assert
+        assert!(conn2.is_ok());
+        assert_eq!(session.state(), SessionState::Streaming);
+    }
+
+    #[test]
+    fn test_gliff_reconnect_resets_count_aaa() {
+        // Arrange
+        let mut session = GliffSession::new("10.0.0.1", 8080);
+        session.connect().unwrap();
+        session.send_input(InputEvent::PointerMotion { x: 1.0, y: 1.0 });
+        session.disconnect();
+        // Act
+        session.connect().unwrap();
+        // Assert
+        assert_eq!(session.events_processed(), 0);
     }
 }
